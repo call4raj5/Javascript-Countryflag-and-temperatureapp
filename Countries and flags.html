@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        //Title Block
+        var title = document.createElement("h2");
+        title.style.textAlign = 'center'
+        title.style.color = 'white'
+        title.style.backgroundColor = "rgb(164, 63, 146)";
+        title.style.margin = '10px 40px 10px 10px'
+        title.innerText = 'COUNTRIES FLAG AND WEATHER APP';
+        document.body.appendChild(title)
+
+        // page design
+        var myPage = document.createElement("div");
+        myPage.style.display = 'flex';
+        myPage.style.flexDirection = 'row';
+        myPage.style.flexWrap = 'wrap';
+        myPage.style.width = "1540px";
+        myPage.style.border = "10px 0px 10px 5px";
+        myPage.style.backgroundColor = "rgb(0,170,170)";
+
+        // JSON fetching ..
+        fetch("https://restcountries.com/v3.1/all")
+            .then(function (data) {
+                return data.json();
+            })
+            .then(function (dataObj) {
+                 
+            /*    console printing for reference
+                for (let i = 0; i < dataObj.length; i++) 
+                {
+                    console.log(dataObj[i].flags.png);
+                    console.log(dataObj[i].name.common);
+                    console.log(dataObj[i].cca2);
+                }
+            */
+                for (var item = 0; item <= 150; item++) {
+                    //block of Containers
+                    var indCard = document.createElement("div");
+                    indCard.style.height = '300px';
+                    indCard.style.width = "31%";
+                    indCard.style.margin = '30px 3px 3px 30px'
+                    indCard.style.backgroundColor = "rgb(0,129,170)";;
+                    indCard.style.display = "grid";
+                    indCard.style.gridAutoRows='auto';
+                
+                    //image placement
+                    var img = document.createElement('img');
+                    img.src = dataObj[item].flags.png;
+                    img.height = "150";
+                    img.width = "250";
+                    img.style.margin = '40px 5px 10px 120px';
+                    indCard.appendChild(img);
+
+                    var country = document.createElement('h3');
+                    country.innerHTML = JSON.stringify(dataObj[item].name.common);
+                    var countryName = JSON.stringify(dataObj[item].name.common);
+                    country.style.color = 'white'
+                    country.style.textAlign = "center";
+
+                    var weatherDiv =document.createElement("div");
+                    weatherDiv.style.width = '400px';
+                    weatherDiv.style.height = '30px';
+                    weatherDiv.style.background = "lightblue";
+                    weatherDiv.style.margin = '0px 50px 0px 40px';
+                    weatherDiv.style.innerHTML = "Click to know weather" 
+                    
+                    var weather = document.createElement('h4');
+                    weather.style.color = "#ad1c4c";
+                    weather.style.marginTop = "5px";
+                    weather.style.textAlign ="Center"
+                    weather.innerText="Click for weather";
+                    weatherDiv.addEventListener("click", function(){ alert("Temperature is xx "); });
+                    weatherDiv.addEventListener("mouseover",myusecase1);
+                    weatherDiv.addEventListener("mouseout",myusecase2);
+                    indCard.appendChild(country);
+                    weatherDiv.appendChild(weather)
+                    indCard.appendChild(weatherDiv);
+
+                    function myusecase1(){
+                        this.style.backgroundColor ="#99a832";         
+                    }
+                        
+                    function myusecase2(){
+                        this.style.backgroundColor ="lightblue";     
+                    }
+   
+                    myPage.appendChild(indCard);
+                }
+                document.body.appendChild(myPage);
+            })
+            .catch(function (err) { console.log(err) })
+
+    </script>
+</body>
+
+</html>
